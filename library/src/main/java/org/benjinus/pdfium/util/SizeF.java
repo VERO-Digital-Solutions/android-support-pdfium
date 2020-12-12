@@ -10,6 +10,7 @@
 package org.benjinus.pdfium.util;
 
 public class SizeF {
+
     private final float width;
     private final float height;
 
