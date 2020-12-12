@@ -1,24 +1,24 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.HamidrezaAmz'
 
 android {
-    compileSdkVersion 27
 
-
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
-
+        versionName "1.0.1"
 
         ndk {
             abiFilters 'x86', 'armeabi-v7a', 'arm64-v8a'
         }
 
         externalNativeBuild {
-            cmake {
 
+            cmake {
                 arguments "-DANDROID_STL=c++_static",
                         "-DANDROID_PLATFORM=android-21",
                         "-DANDROID_ARM_NEON=TRUE"
@@ -33,8 +33,17 @@ android {
         main {
             // let gradle pack the shared library into apk
             jniLibs.srcDirs = ['src/main/cpp/pdfium/lib']
+            jni.srcDirs = [] //disable automatic ndk-build call
         }
     }
+
+    packagingOptions {
+        pickFirst 'lib/armeabi-v7a/libpdfsdk.so'
+        pickFirst 'lib/arm64-v8a/libpdfsdk.so'
+        pickFirst 'lib/x86/libpdfsdk.so'
+        pickFirst 'lib/x86_64/libpdfsdk.so'
+    }
+
 
     externalNativeBuild {
         cmake {

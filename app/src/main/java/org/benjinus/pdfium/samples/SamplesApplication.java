@@ -2,10 +2,12 @@ package org.benjinus.pdfium.samples;
 
 import android.app.Application;
 import android.os.Environment;
+
+import org.benjinus.pdfium.samples.utils.IOUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import org.benjinus.pdfium.samples.utils.IOUtils;
 
 public class SamplesApplication extends Application {
 
