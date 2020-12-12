@@ -1,3 +1,6 @@
+[![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
+[![](https://jitpack.io/v/HamidrezaAmz/android-support-pdfium.svg)](https://jitpack.io/#HamidrezaAmz/android-support-pdfium)
+
 
 # Build PDFium Library for Android
 
