@@ -1,5 +1,6 @@
 package org.benjinus.pdfium;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -38,6 +39,13 @@ public class PdfiumSDK {
 
     /**
      * Context needed to get screen density
+     */
+    public PdfiumSDK(Context ctx) {
+        mCurrentDpi = ctx.getResources().getDisplayMetrics().densityDpi;
+    }
+
+    /**
+     * default constructor
      */
     public PdfiumSDK() {
         mCurrentDpi = 72; // pdfium has default dpi set to 72
