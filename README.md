@@ -19,7 +19,7 @@ Step 2. Add the dependency
 
 ```gradle
 dependencies {
-       implementation 'com.github.hamidrezaamz:android-support-pdfium:1.0.1'
+       implementation 'com.github.hamidrezaamz:android-support-pdfium:x.x.x (last version)'
 }
 ```
 
