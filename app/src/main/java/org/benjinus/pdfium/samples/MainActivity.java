@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             int height = getScreenHeight();
 
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            pdfiumSDK.renderPageBitmap(bitmap, 0, 0, 0, width, height, true);
+            pdfiumSDK.renderPageBitmap(pdfDocument, bitmap, 0, 0, 0, width, height, true);
 
             mImageView.setImageBitmap(bitmap);
 
