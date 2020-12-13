@@ -31,9 +31,6 @@ public class PdfiumSDK {
     private final Map<Integer, Long> mNativeSearchHandlePtr = new ArrayMap<>();
     private int mCurrentDpi;
 
-    // private long mNativeDocPtr;
-    // private ParcelFileDescriptor mFileDescriptor;
-
     static {
         System.loadLibrary("pdfsdk");
         System.loadLibrary("pdfsdk_jni");
@@ -195,6 +192,24 @@ public class PdfiumSDK {
             document.mNativeDocPtr = nativeOpenDocument(FileUtils.getNumFd(fd), password);
         }
 
+        return document;
+    }
+
+    /**
+     * Create new document from bytearray
+     */
+    public PdfDocument newDocument(byte[] data) throws IOException {
+        return newDocument(data, null);
+    }
+
+    /**
+     * Create new document from bytearray with password
+     */
+    public PdfDocument newDocument(byte[] data, String password) throws IOException {
+        PdfDocument document = new PdfDocument();
+        synchronized (lock) {
+            document.mNativeDocPtr = nativeOpenMemDocument(data, password);
+        }
         return document;
     }
 
