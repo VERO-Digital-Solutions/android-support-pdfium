@@ -428,9 +428,9 @@ public class PdfiumSDK {
     /**
      * Get table of contents (bookmarks) for given document
      */
-    public List<PdfDocument.Bookmark> getTableOfContents(PdfDocument doc) {
+    public List<Bookmark> getTableOfContents(PdfDocument doc) {
         synchronized (lock) {
-            List<PdfDocument.Bookmark> topLevel = new ArrayList<>();
+            List<Bookmark> topLevel = new ArrayList<>();
             Long first = nativeGetFirstChildBookmark(doc.mNativeDocPtr, null);
             if (first != null) {
                 recursiveGetBookmark(topLevel, doc, first);
@@ -439,11 +439,11 @@ public class PdfiumSDK {
         }
     }
 
-    private void recursiveGetBookmark(List<PdfDocument.Bookmark> tree, PdfDocument doc, long bookmarkPtr) {
-        PdfDocument.Bookmark bookmark = new PdfDocument.Bookmark();
-        bookmark.mNativePtr = bookmarkPtr;
-        bookmark.title = nativeGetBookmarkTitle(bookmarkPtr);
-        bookmark.pageIdx = nativeGetBookmarkDestIndex(doc.mNativeDocPtr, bookmarkPtr);
+    private void recursiveGetBookmark(List<Bookmark> tree, PdfDocument doc, long bookmarkPtr) {
+        Bookmark bookmark = new Bookmark(bookmarkPtr);
+        // bookmark.mNativePtr = bookmarkPtr;
+        bookmark.setTitle(nativeGetBookmarkTitle(bookmarkPtr));
+        bookmark.setPageIdx(nativeGetBookmarkDestIndex(doc.mNativeDocPtr, bookmarkPtr));
         tree.add(bookmark);
 
         Long child = nativeGetFirstChildBookmark(doc.mNativeDocPtr, bookmarkPtr);
@@ -460,9 +460,9 @@ public class PdfiumSDK {
     /**
      * Get all links from given page
      */
-    public List<PdfDocument.Link> getPageLinks(PdfDocument doc, int pageIndex) {
+    public List<Link> getPageLinks(PdfDocument doc, int pageIndex) {
         synchronized (lock) {
-            List<PdfDocument.Link> links = new ArrayList<>();
+            List<Link> links = new ArrayList<>();
             Long nativePagePtr = doc.mNativePagesPtr.get(pageIndex);
             if (nativePagePtr == null) {
                 return links;
@@ -474,7 +474,7 @@ public class PdfiumSDK {
 
                 RectF rect = nativeGetLinkRect(linkPtr);
                 if (rect != null && (index != null || uri != null)) {
-                    links.add(new PdfDocument.Link(rect, index, uri));
+                    links.add(new Link(rect, index, uri));
                 }
 
             }

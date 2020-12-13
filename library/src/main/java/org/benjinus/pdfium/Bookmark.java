@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bookmark {
+
     private String title;
     private long pageIdx;
     private List<Bookmark> children = new ArrayList<>();
@@ -48,4 +49,5 @@ public class Bookmark {
     public void setChildren(List<Bookmark> children) {
         this.children = children;
     }
+    
 }
