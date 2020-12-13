@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import org.benjinus.pdfium.Meta;
+import org.benjinus.pdfium.PdfDocument;
 import org.benjinus.pdfium.PdfiumSDK;
 import org.benjinus.pdfium.util.Size;
 
@@ -23,7 +24,12 @@ import static android.os.ParcelFileDescriptor.MODE_READ_ONLY;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView mImageView;
+    private ImageView mImageView;
+    private EnumFileType enumFileType = EnumFileType.asset;
+
+    public enum EnumFileType {
+        asset, remote, storage
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,22 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        decodePDFPage();
+        openFile();
+    }
+
+    private void openFile() {
+
+        switch (enumFileType) {
+            case asset:
+                decodePDFPage();
+                break;
+            case remote:
+                openPdfFromMemory();
+                break;
+            case storage:
+                openPdfRemote();
+                break;
+        }
     }
 
     private void decodePDFPage() {
@@ -64,32 +85,40 @@ public class MainActivity extends AppCompatActivity {
 
             ParcelFileDescriptor fileDescriptor = ParcelFileDescriptor.open(pdfFile, MODE_READ_ONLY);
 
-            PdfiumSDK sdk = new PdfiumSDK();
-            sdk.newDocument(fileDescriptor);
+            PdfiumSDK pdfiumSDK = new PdfiumSDK();
+            PdfDocument pdfDocument = pdfiumSDK.newDocument(fileDescriptor);
 
-            Log.d("PDFSDK", "Page count: " + sdk.getPageCount());
+            Log.d("PDFSDK", "Page count: " + pdfiumSDK.getPageCount(pdfDocument));
 
-            Meta meta = sdk.getDocumentMeta();
+            Meta meta = pdfiumSDK.getDocumentMeta(pdfDocument);
             Log.d("PDFSDK", meta.toString());
 
-            sdk.openPage(0);
+            pdfiumSDK.openPage(pdfDocument, 0);
 
-            Size size = sdk.getPageSize(0);
+            Size size = pdfiumSDK.getPageSize(pdfDocument, 0);
             Log.d("PDFSDK", "Page size: " + size.toString());
 
             int width = getScreenWidth();
             int height = getScreenHeight();
 
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            sdk.renderPageBitmap(bitmap, 0, 0, 0, width, height, true);
+            pdfiumSDK.renderPageBitmap(bitmap, 0, 0, 0, width, height, true);
 
             mImageView.setImageBitmap(bitmap);
 
-            sdk.closeDocument();
+            pdfiumSDK.closeDocument(pdfDocument);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void openPdfFromMemory() {
+
+    }
+
+    private void openPdfRemote() {
+
     }
 
     private int getScreenHeight() {
