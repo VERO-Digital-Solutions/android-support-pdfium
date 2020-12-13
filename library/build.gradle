@@ -33,7 +33,7 @@ android {
         main {
             // let gradle pack the shared library into apk
             jniLibs.srcDirs = ['src/main/cpp/pdfium/lib']
-            jni.srcDirs = [] //disable automatic ndk-build call
+            jni.srcDirs = [] // disable automatic ndk-build call
         }
     }
 
