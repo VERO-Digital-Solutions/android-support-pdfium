@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 group = 'com.github.HamidrezaAmz'
+apply from: 'publish.gradle'
 
 android {
     namespace 'org.benjinus.pdfium'
