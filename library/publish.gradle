@@ -1,0 +1,21 @@
+apply plugin: 'maven-publish'
+
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                setGroupId 'com.github.VERO-Digital-Solutions'
+                setArtifactId 'pdfium'
+                version '1.0.0'
+                artifact androidSourcesJar
+                artifact bundleReleaseAar
+            }
+        }
+    }
+}
