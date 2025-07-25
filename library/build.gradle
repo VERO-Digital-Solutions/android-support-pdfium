@@ -4,11 +4,12 @@ group = 'com.github.VERO-Digital-Solutions'
 
 android {
     namespace 'org.benjinus.pdfium'
-    compileSdk = 34
+    compileSdk = 36
+    ndkVersion "29.0.13599879"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 36
         ndk {
             abiFilters 'x86', 'armeabi-v7a', 'arm64-v8a', 'x86_64'
         }
@@ -22,7 +23,8 @@ android {
             cmake {
                 arguments "-DANDROID_STL=c++_static",
                         "-DANDROID_PLATFORM=android-21",
-                        "-DANDROID_ARM_NEON=TRUE"
+                        "-DANDROID_ARM_NEON=TRUE",
+                        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
 
                 cppFlags "-std=c++11 -frtti -fexceptions"
             }
@@ -36,13 +38,12 @@ android {
             jni.srcDirs = [] // disable automatic ndk-build call
         }
     }
-
     packagingOptions {
-        pickFirst 'lib/armeabi-v7a/libpdfsdk.so'
-        pickFirst 'lib/arm64-v8a/libpdfsdk.so'
-        pickFirst 'lib/x86/libpdfsdk.so'
-        pickFirst 'lib/x86_64/libpdfsdk.so'
+        jniLibs {
+            pickFirsts += ['lib/armeabi-v7a/libpdfsdk.so', 'lib/arm64-v8a/libpdfsdk.so', 'lib/x86/libpdfsdk.so', 'lib/x86_64/libpdfsdk.so']
+        }
     }
+
 
     externalNativeBuild {
         cmake {

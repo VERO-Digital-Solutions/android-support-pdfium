@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     namespace 'org.benjinus.pdfium.samples'
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId "org.benjinus.pdfium"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 36
         versionCode 1
         versionName "1.0"
         vectorDrawables {

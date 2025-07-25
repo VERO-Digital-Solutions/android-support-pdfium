@@ -3,7 +3,7 @@
 
 # Sets the minimum version of CMake required to build the native library.
 
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.10.2)
 
 # Specify where JPEGTurbo libraries are located
 set(Pdfium_DIR ${CMAKE_SOURCE_DIR}/pdfium)

@@ -11,8 +11,8 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 setGroupId 'com.github.VERO-Digital-Solutions'
-                setArtifactId 'pdfium'
-                version '1.0.1'
+                setArtifactId 'android-support-pdfium'
+                version '1.0.1-put'
                 artifact(androidSourcesJar)
                 artifact(bundleReleaseAar)
             }
